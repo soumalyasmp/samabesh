@@ -1,0 +1,76 @@
+/* AdminDashboard.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  /* Summary Boxes */
+  .summary-boxes {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .summary-box {
+    flex: 1;
+    padding: 20px;
+    margin: 0 10px;
+    background-color: #f4f4f4;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary-box h2 {
+    margin: 0 0 10px;
+    font-size: 1.5em;
+  }
+  
+  .summary-box p {
+    font-size: 2em;
+    margin: 0;
+    font-weight: bold;
+  }
+  
+  /* Chart Container */
+  .chart-container {
+    margin-bottom: 30px;
+  }
+  
+  .chart-container h2 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+  }
+  
+  /* Event List */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 20px;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+  }
+  
+  li strong {
+    display: block;
+    font-size: 1.2em;
+    margin-bottom: 5px;
+  }
+  
+  li p {
+    margin: 5px 0 0;
+    color: #555;
+  }

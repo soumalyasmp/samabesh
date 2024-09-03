@@ -1,0 +1,79 @@
+/* AdminJobList.css */
+
+.admin-job-list {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 1200px;
+  }
+  
+  .chart-container {
+    margin: 20px 0;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    color: #444;
+    margin-bottom: 10px;
+  }
+  
+  p {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+  .summary-boxes {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+  }
+  
+  .summary-box {
+    background: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    flex: 1;
+    margin-right: 10px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .summary-box:last-child {
+    margin-right: 0;
+  }
+  
+  .summary-box h2 {
+    font-size: 1.25rem;
+    margin-bottom: 10px;
+  }
+  
+  .summary-box p {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .chart-container {
+    margin: 20px 0;
+  }
+  
+  @media (max-width: 768px) {
+    .summary-boxes {
+      flex-direction: column;
+    }
+  
+    .summary-box {
+      margin-right: 0;
+      margin-bottom: 10px;
+    }
+  
+    .summary-box:last-child {
+      margin-bottom: 0;
+    }
+  }
