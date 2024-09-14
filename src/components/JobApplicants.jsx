@@ -15,7 +15,14 @@ const JobApplicants = () => {
 
     const fetchApplicants = async () => {
       try {
-        const token = localStorage.getItem('token');
+        // Fetch alumni token from local storage
+        const token = localStorage.getItem('alumniToken');
+
+        // Check if token is available
+        if (!token) {
+          console.error('No alumni token found');
+          return;
+        }
 
         const res = await fetch(`http://localhost:5000/api/job-registrations/applied-students/${jobId}`, {
           headers: {
@@ -39,8 +46,14 @@ const JobApplicants = () => {
 
   const handleUpdateStatus = async (applicantId, status) => {
     try {
-      const token = localStorage.getItem('token');
-      
+      // Fetch alumni token from local storage
+      const token = localStorage.getItem('alumniToken');
+
+      if (!token) {
+        console.error('No alumni token found');
+        return;
+      }
+
       const res = await fetch(`http://localhost:5000/api/job-registrations/${applicantId}`, {
         method: 'PUT',
         headers: {
@@ -67,35 +80,52 @@ const JobApplicants = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-gray-100">
       <Navbar />
       <div className="mt-24 px-6 py-4">
-        <h2 className="text-2xl font-semibold mb-4">Applicants for Job</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Job Applicants</h2>
         {applicants.length === 0 ? (
-          <p>No applicants yet.</p>
+          <p className="text-center text-lg text-gray-600">No applicants yet.</p>
         ) : (
-          <ul className="list-disc pl-5 space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {applicants.map((applicant) => (
-              <li key={applicant._id}>
-                <p><strong>Name:</strong> {applicant.studentName}</p>
-                <p><strong>Email:</strong> {applicant.email}</p>
-                <p><strong>Contact No:</strong> {applicant.contactNo}</p>
-                <p><strong>Status:</strong> {applicant.status}</p>
-                <button
-                  onClick={() => handleUpdateStatus(applicant._id, 'Approved')}
-                  className="text-white bg-green-500 hover:bg-green-600 px-3 py-1 rounded"
-                >
-                  Accept
-                </button>
-                <button
-                  onClick={() => handleUpdateStatus(applicant._id, 'Rejected')}
-                  className="text-white bg-red-500 hover:bg-red-600 px-3 py-1 rounded ml-2"
-                >
-                  Reject
-                </button>
-              </li>
+              <div
+                key={applicant._id}
+                className="bg-white p-6 rounded-lg shadow-md transition-transform transform hover:scale-105"
+              >
+                <div className="flex justify-between items-center mb-4">
+                  <h3 className="text-xl font-semibold text-gray-800">{applicant.studentName}</h3>
+                  <span
+                    className={`px-3 py-1 rounded-full text-sm font-semibold ${
+                      applicant.status === 'Approved'
+                        ? 'bg-green-100 text-green-600'
+                        : applicant.status === 'Rejected'
+                        ? 'bg-red-100 text-red-600'
+                        : 'bg-gray-100 text-gray-600'
+                    }`}
+                  >
+                    {applicant.status}
+                  </span>
+                </div>
+                <p className="text-gray-700 mb-2"><strong>Email:</strong> {applicant.email}</p>
+                <p className="text-gray-700 mb-2"><strong>Contact No:</strong> {applicant.contactNo}</p>
+                <div className="flex mt-4">
+                  <button
+                    onClick={() => handleUpdateStatus(applicant._id, 'Approved')}
+                    className="flex-1 bg-green-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400 focus:ring-opacity-75 transition-colors"
+                  >
+                    Accept
+                  </button>
+                  <button
+                    onClick={() => handleUpdateStatus(applicant._id, 'Rejected')}
+                    className="flex-1 bg-red-600 text-white font-semibold py-2 px-4 rounded-lg ml-3 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75 transition-colors"
+                  >
+                    Reject
+                  </button>
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         )}
       </div>
       <Footer />
@@ -104,3 +134,4 @@ const JobApplicants = () => {
 };
 
 export default JobApplicants;
+

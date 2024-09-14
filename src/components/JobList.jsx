@@ -4,12 +4,11 @@ import Modal from 'react-modal';
 // Ensure the modal root element is set for accessibility
 Modal.setAppElement('#root');
 
-const JobList = ({ fromProfile }) => {
+const JobList = ({ fromProfile, style }) => {
   const [jobs, setJobs] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedJob, setSelectedJob] = useState(null);
   const [formData, setFormData] = useState({
-    studentId: '',
     studentName: '',
     email: '',
     contactNo: '',
@@ -44,13 +43,11 @@ const JobList = ({ fromProfile }) => {
 
   const openModal = (job) => {
     setSelectedJob(job);
-    setFormData(prev => ({
-      ...prev,
-      studentId: '', // Reset studentId if needed
+    setFormData({
       studentName: '',
       email: '',
       contactNo: '',
-    }));
+    });
     setIsModalOpen(true);
   };
 
@@ -69,7 +66,6 @@ const JobList = ({ fromProfile }) => {
       const applicationDate = new Date().toISOString().substring(0, 10);
       const jobRegistration = {
         jobId: selectedJob._id,
-        studentId: formData.studentId,
         studentName: formData.studentName,
         email: formData.email,
         contactNo: formData.contactNo,
@@ -106,27 +102,42 @@ const JobList = ({ fromProfile }) => {
   };
 
   return (
-    <div className="container">
-      <h2 className="heading">Job Listings</h2>
-      <ul className="job-list">
+    <div className="container mx-auto px-4 py-10">
+      <h2 className="text-4xl font-bold text-center text-gray-800 mb-10">
+        Job Listings
+      </h2>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {jobs.map(job => (
-          <li key={job._id} className="job-card">
-            <h3 className="job-title">Job Title: {job.title}</h3>
-            <p className="job-company"><strong>Company:</strong> {job.company}</p>
-            <p className="job-description"><strong>Description:</strong> {job.description}</p>
-            <p className="job-location"><strong>Location:</strong> {job.location}</p>
-           {fromProfile&& <button
-              className="apply-button"
-              onClick={() => openModal(job)}
-              disabled={!isAuthenticated || !fromProfile} // Disable button if not authenticated or not from profile
-            >
-              Apply
-            </button>}
-          </li>
+          <div key={job._id} className="bg-white shadow-lg rounded-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300">
+            <div className="p-6 bg-gradient-to-br from-blue-100 to-blue-50 relative">
+              <img 
+                src="https://freelogopng.com/images/all_img/1657952641google-logo-png-image.png" 
+                alt="Company logo" 
+                className="w-16 h-16 rounded-full absolute top-4 right-4 border-2 border-white"
+              />
+              <h3 className="text-lg font-bold text-gray-900 mb-3">Job Title: {job.title}</h3>
+              <p className="text-sm text-gray-700 font-semibold mb-3">Company: {job.company}</p>
+              <p className="text-gray-600 mb-3 h-20 overflow-hidden">{job.description}</p>
+            </div>
+            <div className="p-4 bg-gray-50">
+              <p className="text-sm text-gray-700">
+                <strong>Location:</strong> {job.location}
+              </p>
+              {fromProfile && (
+                <button
+                  className="w-full mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75"
+                  onClick={() => openModal(job)}
+                  disabled={!isAuthenticated || !fromProfile}
+                >
+                  Apply
+                </button>
+              )}
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
 
-      {/* Modal for application */}
+      {/* Modal for job application */}
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
@@ -136,55 +147,64 @@ const JobList = ({ fromProfile }) => {
           content: { width: '400px', margin: 'auto', borderRadius: '10px', padding: '20px', border: 'none' },
         }}
       >
-        <h2 className="modal-heading">Apply for Job: {selectedJob?.title}</h2>
-        <form onSubmit={(e) => e.preventDefault()} className="form">
-          <label className="form-label">
-            Student ID:
-            <input
-              type="text"
-              name="studentId"
-              value={formData.studentId}
-              onChange={handleInputChange}
-              required
-              className="form-input"
-            />
-          </label>
-          <label className="form-label">
-            Name:
+        <h2 className="text-xl font-semibold text-gray-800 mb-4">
+          Apply for Job: {selectedJob?.title}
+        </h2>
+        <form onSubmit={(e) => e.preventDefault()} className="space-y-4">
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Name:
+            </label>
             <input
               type="text"
               name="studentName"
               value={formData.studentName}
               onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
               required
-              className="form-input"
             />
-          </label>
-          <label className="form-label">
-            Email:
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Email:
+            </label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
               required
-              className="form-input"
             />
-          </label>
-          <label className="form-label">
-            Contact Number:
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-gray-700">
+              Contact Number:
+            </label>
             <input
               type="text"
               name="contactNo"
               value={formData.contactNo}
               onChange={handleInputChange}
+              className="w-full border border-gray-300 rounded px-3 py-2 mt-1"
               required
-              className="form-input"
             />
-          </label>
-          <div className="form-buttons">
-            <button type="button" onClick={handleSubmit} className="confirm-button">Submit Application</button>
-            <button type="button" onClick={closeModal} className="cancel-button">Cancel</button>
+          </div>
+          <div className="flex justify-between">
+            <button
+              type="button"
+              onClick={handleSubmit}
+              className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
+            >
+              Submit Application
+            </button>
+            <button
+              type="button"
+              onClick={closeModal}
+              className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-400"
+            >
+              Cancel
+            </button>
           </div>
         </form>
       </Modal>
@@ -193,4 +213,10 @@ const JobList = ({ fromProfile }) => {
 };
 
 export default JobList;
+
+
+
+
+
+
 

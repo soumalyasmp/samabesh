@@ -1,110 +1,169 @@
-/* EventList.css */
-
 .container {
-    padding: 20px;
-    font-family: Arial, sans-serif;
-  }
-  
-  .heading {
-    text-align: center;
-    color: #333;
-  }
-  
-  .event-list {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .event-card {
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    padding: 15px;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #fff;
-  }
-  
-  .event-title {
-    margin: 0;
-    color: #007bff;
-  }
-  
-  .event-description {
-    margin: 10px 0;
-    color: #555;
-  }
-  
-  .event-date {
-    margin: 0;
-    color: #777;
-  }
-  
-  .register-button {
-    margin-top: 10px;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-    font-size: 16px;
-  }
-  
-  .register-button:hover {
-    background-color: #218838;
-  }
-  
-  .modal-heading {
-    margin-top: 0;
-  }
-  
-  .modal-event-details {
-    margin: 10px 0;
-  }
-  
-  .form {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-label {
-    margin-bottom: 10px;
-  }
-  
-  .form-input, .form-select {
-    padding: 8px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-  
-  .form-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  .confirm-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #28a745;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .confirm-button:hover {
-    background-color: #218838;
-  }
-  
-  .cancel-button {
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    background-color: #dc3545;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .cancel-button:hover {
-    background-color: #c82333;
-  }
+  padding: 20px;
+}
+
+.heading {
+  font-size: 2em;
+  margin-bottom: 20px;
+}
+
+.event-list {
+  display: flex;
+  flex-direction: row;
+  list-style: none;
+  padding: 0;
+}
+
+.event-card {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  height: auto; /* Adjust height automatically */
+  position: relative;
+  max-width: 400px; /* Limit card width */
+}
+
+.event-image {
+  width: 100%; /* Full width of the card */
+  height: 120px; /* Reduced height */
+  object-fit: cover; /* Ensure image covers the area without distortion */
+}
+
+.event-info {
+  display:flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.event-title {
+  font-size: 1.2em;
+  margin: 0;
+}
+
+.event-description,
+.event-date {
+  margin: 5px 0;
+}
+.register-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.register-button:hover {
+  background-color: #0056b3;
+}
+
+.registered-button {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: not-allowed;
+}
+
+.registered-button:hover {
+  background-color: darkgreen;
+}
+
+
+/* Modal Styles */
+.modal-heading {
+  font-size: 1.5em;
+  margin-bottom: 20px;
+}
+
+.modal-event-details {
+  margin: 10px 0;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-label {
+  margin-bottom: 10px;
+}
+.form-input,
+.form-select {
+  width: 100%;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+}
+
+.form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.confirm-button {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.confirm-button:hover {
+  background-color: #218838;
+}
+
+.cancel-button {
+  background-color: #dc3545;
+  color: #fff;
+}
+
+.cancel-button:hover {
+  background-color: #c82333;
+}
+
+
+
+.event-details {
+  margin-top: 10px;
+}
+
+.event-details p {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.event-details i {
+  margin-right: 10px;
+  color: #007bff;
+}
+
+.event-image {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.event-info {
+  padding: 10px;
+}
+
+.register-button {
+  margin-top: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+

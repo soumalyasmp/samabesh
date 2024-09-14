@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { Container, Typography, TextField, Button, Box } from '@mui/material';
+import AddCircleIcon from '@mui/icons-material/AddCircle';
 
 const JobPostingForm = ({ alumni_name }) => {
   const [formData, setFormData] = useState({
@@ -38,63 +40,92 @@ const JobPostingForm = ({ alumni_name }) => {
       const result = await response.json();
       console.log('Job posted successfully:', result);
       // Handle successful posting (e.g., show a success message or redirect)
+      alert('Job posted successfully!');
+      setFormData({
+        title: '',
+        company: '',
+        description: '',
+        location: '',
+        alumniId: alumni_name || '',
+      });
     } catch (error) {
       console.error('Error posting job:', error);
-      // Handle error
+      alert('Error posting job. Please try again.');
     }
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div>
-        <label>
-          Job Title:
-          <input
-            type="text"
-            name="title" // Set name attribute to match formData key
+    <Container component="main" maxWidth="sm" sx={{ mt: 8, mb: 4 }}>
+      <Typography component="h1" variant="h5" align="center" gutterBottom>
+        Post a Job
+      </Typography>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          p: 3,
+          borderRadius: 2,
+          boxShadow: 3,
+          backgroundColor: '#ffffff', // White background for the form
+        }}
+      >
+        <form onSubmit={handleSubmit} noValidate>
+          <TextField
+            margin="normal"
+            fullWidth
+            label="Job Title"
+            name="title"
             value={formData.title}
             onChange={handleChange}
             required
+            variant="outlined"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Company:
-          <input
-            type="text"
-            name="company" // Set name attribute to match formData key
+          <TextField
+            margin="normal"
+            fullWidth
+            label="Company"
+            name="company"
             value={formData.company}
             onChange={handleChange}
             required
+            variant="outlined"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Description:
-          <textarea
-            name="description" // Set name attribute to match formData key
+          <TextField
+            margin="normal"
+            fullWidth
+            label="Description"
+            name="description"
             value={formData.description}
             onChange={handleChange}
             required
+            multiline
+            rows={4}
+            variant="outlined"
           />
-        </label>
-      </div>
-      <div>
-        <label>
-          Location:
-          <input
-            type="text"
-            name="location" // Set name attribute to match formData key
+          <TextField
+            margin="normal"
+            fullWidth
+            label="Location"
+            name="location"
             value={formData.location}
             onChange={handleChange}
             required
+            variant="outlined"
           />
-        </label>
-      </div>
-      <button type="submit">Post Job</button>
-    </form>
+          <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              startIcon={<AddCircleIcon />}
+            >
+              Post Job
+            </Button>
+          </Box>
+        </form>
+      </Box>
+    </Container>
   );
 };
 
