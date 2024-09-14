@@ -1,0 +1,35 @@
+/* AdminAlumniDirectory.css */
+
+.admin-alumni-directory {
+  font-family: Arial, sans-serif;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.chart-container {
+  margin: 20px 0;
+}
+
+p {
+  font-size: 1rem;
+  color: #666;
+}
+
+@media (max-width: 768px) {
+  .chart-container {
+    margin: 10px 0;
+  }
+}

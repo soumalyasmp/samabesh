@@ -1,0 +1,45 @@
+/* AdminJobList.css */
+.admin-job-list {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-job-list .admin-navbar {
+  background-color: #1E3A8A; /* Sky Blue color */
+  color: white;
+  width: 100%; /* Full width */
+  position: fixed; /* Make it stick to the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it's above other content */
+}
+
+.admin-job-list .admin-navbar .nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.admin-job-list main {
+  margin-top: 4rem; /* Adjust this if needed to ensure content is not hidden behind the navbar */
+}
+
+.chart-wrapper {
+  display: flex;
+  flex-direction: row;
+  gap: 2rem;
+  overflow-x: auto;
+  padding: 1rem;
+}
+
+.chart-container {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Enhanced shadow effect */
+  width: 100%;
+  max-width: 30rem; /* Adjust width if needed */
+  flex-shrink: 0;
+}

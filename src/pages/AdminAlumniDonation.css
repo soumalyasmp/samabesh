@@ -1,0 +1,37 @@
+/* AdminAlumniDonation.css */
+.admin-alumni-donation {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.admin-alumni-donation .admin-navbar {
+  background: linear-gradient(90deg, #1E3A8A, #4A90E2); /* Blue gradient */
+  color: white;
+  width: 100%; /* Full width */
+  position: fixed; /* Make it stick to the top */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure it's above other content */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Shadow effect */
+}
+
+.admin-alumni-donation .admin-navbar .nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+}
+
+.admin-alumni-donation .chart-container {
+  margin-top: 4rem; /* Adjust this to ensure content is not hidden behind the navbar */
+  background-color: white;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4); /* Increased shadow effect */
+  transition: box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+.admin-alumni-donation .chart-container:hover {
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5); /* Shadow effect on hover */
+}

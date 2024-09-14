@@ -1,0 +1,30 @@
+/* src/pages/AdminHome.css */
+
+.admin-home-links {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.admin-home-link {
+  text-decoration: none;
+  color: #333;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 20px;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+.admin-home-link:hover {
+  background-color: #e0e0e0;
+}
+
+.admin-home-link h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.admin-home-link p {
+  margin: 0;
+}
