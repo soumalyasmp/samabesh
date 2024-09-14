@@ -2,38 +2,55 @@ const asyncHandler = require('express-async-handler');
 const Student = require('../models/currentStudentModel');
 const generateToken = require('../utils/generateToken');
 
+// Register a new student
 const registerStudent = asyncHandler(async (req, res) => {
-  const { name, studentId, email, password, graduationYear } = req.body;
+  const {
+    name,
+    email,
+    password,
+    graduationYear,
+    department,
+    cgpa,
+    skills,
+    bio,
+    interests
+  } = req.body;
+
+  const profilePicture = req.file ? req.file.filename : null; // Handle file upload
 
   const studentExists = await Student.findOne({ email });
 
   if (studentExists) {
-    res.status(400);
-    throw new Error('Student already exists');
+    return res.status(400).json({ message: 'Student already exists' });
   }
 
-  const student = await Student.create({
+  const student = new Student({
     name,
-    studentId,
     email,
     password,
     graduationYear,
+    profilePicture,
+    department,
+    cgpa,
+    skills,
+    bio,
+    interests
   });
 
-  if (student) {
+  try {
+    await student.save();
     res.status(201).json({
       _id: student._id,
       name: student.name,
       email: student.email,
-      studentId: student.studentId,
       token: generateToken(student._id),
     });
-  } else {
-    res.status(400);
-    throw new Error('Invalid student data');
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
+// Authenticate an existing student
 const authStudent = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
@@ -44,65 +61,72 @@ const authStudent = asyncHandler(async (req, res) => {
       _id: student._id,
       name: student.name,
       email: student.email,
-      studentId: student.studentId,
+      profilePicture: student.profilePicture, // Include profile picture in the response
       token: generateToken(student._id),
     });
   } else {
-    res.status(401);
-    throw new Error('Invalid email or password');
+    res.status(401).json({ message: 'Invalid email or password' });
   }
 });
 
-const getStudentProfile = async (req, res) => {
-  try {
-    const studentId = req.params.id;
-    const student = await Student.findById(studentId);
+// Get a student's profile by ID
+const getStudentProfile = asyncHandler(async (req, res) => {
+  const student = await Student.findById(req.params.id);
 
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-
+  if (student) {
     res.json(student);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
+  } else {
+    res.status(404).json({ message: 'Student not found' });
   }
-};
+});
 
-const updateStudentProfile = async (req, res) => {
+// Update a student's profile by ID
+const updateStudentProfile = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const { name, email, password, graduationYear, department, cgpa, skills, bio, interests } = req.body;
+
+  const student = await Student.findById(id);
+
+  if (!student) {
+    return res.status(404).json({ message: 'Student not found' });
+  }
+
+  student.name = name || student.name;
+  student.email = email || student.email;
+  student.graduationYear = graduationYear || student.graduationYear;
+  student.department = department || student.department;
+  student.cgpa = cgpa || student.cgpa;
+  student.skills = skills || student.skills;
+  student.bio = bio || student.bio;
+  student.interests = interests || student.interests;
+
+  if (password) {
+    student.password = password; // Hash password before saving
+  }
+
+  if (req.file) {
+    student.profilePicture = req.file.filename; // Handle file upload
+  }
+
   try {
-    const studentId = req.params.id;
-    const { name, email, password, graduationYear } = req.body;
-
-    const student = await Student.findById(studentId);
-
-    if (!student) {
-      return res.status(404).json({ message: 'Student not found' });
-    }
-
-    student.name = name || student.name;
-    student.email = email || student.email;
-    student.graduationYear = graduationYear || student.graduationYear;
-    if (password) {
-      student.password = password; // Hash password before saving
-    }
-
-    await student.save();
-
-    res.json({ message: 'Profile updated successfully' });
+    const updatedStudent = await student.save();
+    res.json({ message: 'Profile updated successfully', student: updatedStudent });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    res.status(400).json({ message: error.message });
   }
-};
+});
 
+// Get all students
 const getAllStudents = asyncHandler(async (req, res) => {
   const students = await Student.find({});
   res.json(students);
 });
 
-module.exports = { 
-  registerStudent, 
-  authStudent, 
-  getStudentProfile, 
-  updateStudentProfile, 
-  getAllStudents 
+module.exports = {
+  registerStudent,
+  authStudent,
+  getStudentProfile,
+  updateStudentProfile,
+  getAllStudents,
 };
+

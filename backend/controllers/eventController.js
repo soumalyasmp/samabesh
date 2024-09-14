@@ -1,22 +1,54 @@
+// controllers/eventController.js
+const multer = require('multer');
 const asyncHandler = require('express-async-handler');
 const Event = require('../models/eventModel');
-const Alumni = require('../models/alumniModel'); // Assuming you have an alumni model
+const Alumni = require('../models/alumniModel');
+
+// Set up multer for file upload
+// const storage = multer.diskStorage({
+//   destination(req, file, cb) {
+//     cb(null, 'uploads/'); // Destination folder for event images
+//   },
+//   filename(req, file, cb) {
+//     cb(null, `${Date.now()}-${file.originalname}`); // Use timestamp to ensure unique filenames
+//   },
+// });
+
+// // File filter to allow only images
+// const fileFilter = (req, file, cb) => {
+//   if (file.mimetype.startsWith('image')) {
+//     cb(null, true);
+//   } else {
+//     cb(new Error('Only images are allowed!'), false);
+//   }
+// };
+
+// const upload = multer({
+//   storage,
+//   fileFilter,
+// });
 
 // Create a new event
 const createEvent = asyncHandler(async (req, res) => {
   const { title, description, date, location } = req.body;
+  const image = req.file ? req.file.filename : null; // Get image path from multer
+
+  if (!image) {
+    res.status(400);
+    throw new Error('Please upload an image for the event');
+  }
 
   const event = new Event({
     title,
     description,
     date,
     location,
+    image, // Save the image URL/path in the database
   });
 
   const createdEvent = await event.save();
   res.status(201).json(createdEvent);
 });
-
 // Get all events
 const getEvents = asyncHandler(async (req, res) => {
   const events = await Event.find({});
@@ -94,11 +126,38 @@ const registerForEvent = asyncHandler(async (req, res) => {
   }
 });
 
+const getEventRegistrationsCount = async (req, res) => {
+  try {
+    const events = await Event.aggregate([
+      {
+        $lookup: {
+          from: 'eventregistrations',
+          localField: '_id',
+          foreignField: 'event',
+          as: 'registrations'
+        }
+      },
+      {
+        $addFields: {
+          registrationCount: { $size: '$registrations' }
+        }
+      }
+    ]);
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+
 module.exports = {
   createEvent,
   getEvents,
-  getEventById, // Export the new function
+  getEventById,
   updateEvent,
   deleteEvent,
   registerForEvent,
+  getEventRegistrationsCount,
 };
+
+

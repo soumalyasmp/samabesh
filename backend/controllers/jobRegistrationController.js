@@ -1,16 +1,16 @@
 const asyncHandler = require('express-async-handler');
 const JobRegistration = require('../models/JobRegistrationModel');
-const mongoose=require('mongoose');
+const mongoose = require('mongoose');
 
 // @desc    Register for a job
 // @route   POST /api/job-registrations
 // @access  Private (only for logged-in students)
 const registerForJob = asyncHandler(async (req, res) => {
-  const { jobId, studentId, studentName, email, contactNo } = req.body;
+  const { jobId, studentName, email, contactNo } = req.body;
 
-  if (!jobId || !studentId || !studentName || !email || !contactNo) {
+  if (!jobId || !studentName || !email || !contactNo) {
     res.status(400);
-    throw new Error('Please provide all required fields: jobId, studentId, studentName, email, and contactNo.');
+    throw new Error('Please provide all required fields: jobId, studentName, email, and contactNo.');
   }
 
   const existingRegistration = await JobRegistration.findOne({ email, jobId });
@@ -21,7 +21,6 @@ const registerForJob = asyncHandler(async (req, res) => {
 
   const jobRegistration = new JobRegistration({
     jobId,
-    studentId,
     studentName,
     email,
     contactNo,
@@ -30,19 +29,17 @@ const registerForJob = asyncHandler(async (req, res) => {
   const createdJobRegistration = await jobRegistration.save();
   res.status(201).json(createdJobRegistration);
 });
+
 // @desc    Get all job registrations
 // @route   GET /api/job-registrations
 // @access  Private (for admin)
 const getJobRegistrations = asyncHandler(async (req, res) => {
   const jobRegistrations = await JobRegistration.find({})
     .populate('jobId', 'title company');
-  
+
   res.json(jobRegistrations);
 });
 
-// @desc    Get students applied for a specific job
-// @route   GET /api/job-registrations/applied-students/:jobId
-// @access  Private (for admin)
 // @desc    Get students applied for a specific job
 // @route   GET /api/job-registrations/applied-students/:jobId
 // @access  Private (for admin)
@@ -55,15 +52,10 @@ const getAppliedStudentsByJob = asyncHandler(async (req, res) => {
   }
 
   const registrations = await JobRegistration.find({ jobId })
-    .populate('studentId', 'name') // Populate studentId to get student name
-    .select('studentId studentName email contactNo status'); // Adjust selected fields as needed
+    .select('studentName email contactNo status'); // Adjust selected fields to exclude studentId
 
   res.json(registrations);
 });
-
-
-
-
 
 // @desc    Update job registration status
 // @route   PUT /api/job-registrations/:id
@@ -96,4 +88,5 @@ module.exports = {
   getAppliedStudentsByJob,
   updateJobRegistrationStatus,
 };
+
 
