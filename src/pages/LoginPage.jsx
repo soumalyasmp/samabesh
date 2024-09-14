@@ -49,7 +49,6 @@ const LoginPage = () => {
           localStorage.setItem('alumniId', data._id); // Save alumni ID
         }
       localStorage.setItem(tokenKey, data.token);
-      localStorage.setItem('alumniName', data.name);
       console.log('Token Stored:', data.token);
         navigate(`/${activeTab === 'admin' ? 'admin/dashboard' : `${activeTab}/${data._id}`}`);
       } else {
