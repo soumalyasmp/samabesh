@@ -18,12 +18,14 @@ import AdminEventListing from './pages/AdminEventListing';
 import AdminJobList from './pages/AdminJobList';
 import AdminAlumniDirectory from './pages/AdminAlumniDirectory';
 import AdminStudent from './pages/AdminStudent';
+import AboutUs from './components/AboutUs';
 import AdminAlumniDonation from './pages/AdminAlumniDonation';
 import JobList from './components/JobList';
 import JobsPostedByAlumni from './components/JobPostedByAlumni';
 import JobApplicants from './components/JobApplicants';
 import CurrentStudentDirectory from './pages/CurrentStudentDirectory';
 import LoginPage from './pages/LoginPage';
+import ConnectionsList from './pages/ConnectionsList';
 
 
 const App = () => {
@@ -34,8 +36,8 @@ const App = () => {
         <Route path="/directory" element={<AlumniDirectory />} />
         <Route path="/success" element={<SuccessStories />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/donate" element={<DonationForm />} />
-        <Route path="/register" element={<RegistrationForm />} />
+        <Route path="/donate/:projectID" element={<DonationForm />} />
+        <Route path="/alumni-register" element={<RegistrationForm />} />
         <Route path="/events" element={<EventList />} />
         <Route path="/alumni/:id" element={<AlumniProfile />} />
         <Route path="/student-register" element={<CurrentStudentRegistrationForm />} />
@@ -44,7 +46,9 @@ const App = () => {
         <Route path="/jobs-posted-by/:alumniName" element={<JobsPostedByAlumni />} />
         <Route path="/admin/dashboard" element={<AdminDashboard/>} />
         <Route path="/admin/donations" element={<AdminAlumniDonation/>}/>
+        <Route path="/alumni/:id/connections" element={<ConnectionsList/>}/>
         <Route path="/admin" element={<AdminHome/>}/>
+        <Route path="/about" element={<AboutUs/>}/>
         <Route path="/admin/login" element={<AdminLogin/>}/>
         <Route path="/loginpage" element={<LoginPage/>}/>
         <Route path="/admin/students" element={<AdminStudent/>}/>
