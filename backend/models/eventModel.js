@@ -6,7 +6,8 @@ const eventSchema = mongoose.Schema(
     description: { type: String, required: true },
     date: { type: Date, required: true },
     location: { type: String, required: true },
-    registeredAlumni: [{ type: String }], // Store the names of registered alumni
+    registeredAlumni: [{ type: String }],
+    image: { type: String, required: true }, // Store the URL/path of the event image
   },
   {
     timestamps: true,
@@ -16,3 +17,4 @@ const eventSchema = mongoose.Schema(
 const Event = mongoose.model('Event', eventSchema);
 
 module.exports = Event;
+

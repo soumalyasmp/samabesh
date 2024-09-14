@@ -6,11 +6,6 @@ const jobRegistrationSchema = new mongoose.Schema({
     ref: 'Job',
     required: true,
   },
-  studentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Student',
-    required: true,
-  },
   studentName: {
     type: String,
     required: true,
@@ -37,4 +32,5 @@ const jobRegistrationSchema = new mongoose.Schema({
 const JobRegistration = mongoose.models.JobRegistration || mongoose.model('JobRegistration', jobRegistrationSchema);
 
 module.exports = JobRegistration;
+
 

@@ -11,6 +11,9 @@ const alumniSchema = mongoose.Schema({
   currentCompany: { type: String },
   currentLocation: { type: String },
   profilePicture: { type: String }, // Stores the filename or URL of the profile picture
+  bio: { type: String }, // Short bio about the alumni
+  college: { type: String, default: 'Techno Main Salt Lake' }, // Default college value
+  skills: [{ type: String }], // Array of skills
   successStories: [{ 
     title: { type: String },
     description: { type: String },
@@ -40,3 +43,5 @@ alumniSchema.methods.matchPassword = async function(enteredPassword) {
 const Alumni = mongoose.model('Alumni', alumniSchema);
 
 module.exports = Alumni;
+
+
